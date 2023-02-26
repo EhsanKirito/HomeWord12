@@ -8,28 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.scollingfragment.R
 import com.example.scollingfragment.databinding.FragmentCheatBinding
 
 class CheatFragment : Fragment(R.layout.fragment_cheat) {
+    private val args by navArgs<CheatFragmentArgs>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = DataBindingUtil.bind<FragmentCheatBinding>(view)
-        val answer = arguments?.getBoolean("ANSWER", false)
+        val answer = args.answer
         var cheatStatus = Cheater
         binding?.btnShow?.setOnClickListener {
             binding.txtCheat.text = answer.toString()
             cheatStatus.cheats = true
         }
-//        binding?.btnBack?.setOnClickListener {
-//            parentFragmentManager.commit {
-//                setReorderingAllowed(true)
-//                replace<QuizFragment>(R.id.fragmentHolder,
-//                    args = bundleOf("CHEAT" to cheatStatus)
-//                )
-//
-//            }
-//        }
     }
 
 }

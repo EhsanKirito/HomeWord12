@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.*
+import androidx.navigation.fragment.findNavController
 import com.example.scollingfragment.R
 import com.example.scollingfragment.databinding.FragmentQuizBinding
 
@@ -17,7 +18,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding = DataBindingUtil.bind(view)!!
         binding.lifecycleOwner = this
         binding.question = quiz
-//        quiz.cheatStatus = arguments?.getBoolean("CHEAT") ?: false
+
 
         fun answerLock() {
             binding.btnTrue.isEnabled  = false
@@ -109,12 +110,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding.btnCheat.setOnClickListener {
             binding.btnCheat.isEnabled = false
             quiz.clickList[2] = false
-            parentFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<CheatFragment>(R.id.fragmentHolder,
-                    args = bundleOf("ANSWER" to quiz.currentAnswer))
-                addToBackStack(null)
-            }
+            findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToCheatFragment(quiz.currentAnswer) )
         }
 
     }
